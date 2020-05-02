@@ -1,0 +1,24 @@
+#!/bin/bash
+echo "введите префикс"
+read pref
+#Просматриваем все файлы в директории 211
+for file in `find ./211 -type f -name "*"`
+do
+#Отбираем файле недоступные для записи
+if [ -w $file ]
+  then
+    echo "файл" $file "доступен для записи"
+  else
+    echo "файл" $file "не доступен для записи\n"
+    echo "Генерируем имена копий ,добавляя префикс"
+        pathname="$file"
+        res1=$(basename "$pathname")
+        res2="$pref$res1"
+            echo "создаем копию в другой директории"
+            cp $file ./212/$res2
+                  ls -l ./212/$res2
+                  echo "делаем файл доступным для записи всем"
+                  chmod a+w ./212/$res2
+                  ls -l ./212/$res2
+fi
+done
